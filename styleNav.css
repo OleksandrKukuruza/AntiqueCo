@@ -1,0 +1,126 @@
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* Загальні стилі для navbar */
+.navbar-expand-lg {
+    background-color: #222 !important;
+    padding: 15px 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
+  }
+  
+  .navbar-brand {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-brand:hover {
+    color: #f0ad4e; 
+  }
+  
+  .navbar-nav .nav-link {
+    color: #ddd;
+    font-size: 16px;
+    margin-left: 20px;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color: #f0ad4e; 
+    transform: translateY(-2px);
+  }
+  
+  .navbar-nav .nav-link.active {
+    color: #f0ad4e;
+    font-weight: bold;
+  }
+
+
+  .user-email {
+    font-weight: bold;
+  }
+
+  .logout-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: 10px;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .user-menu {
+    color: aliceblue;
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    position: relative;
+    cursor: pointer;
+    }
+
+  .logout-btn {
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none; 
+    }
+
+  .logout-btn.show {
+    display: inline-block;
+    }
+
+ .cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .cart-item img {
+    width: 100px;
+    height: auto;
+    cursor: pointer;
+  }
+  .cart-info {
+    flex-grow: 1;
+    margin-left: 15px;
+  }
+  .remove-btn {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: red;
+    cursor: pointer;
+  }
+  .form-section {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  .white-icon {
+      filter: brightness(0) invert(1);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .white-icon:hover {
+    filter: brightness(0) saturate(100%) invert(48%) sepia(90%) saturate(747%) hue-rotate(5deg) brightness(98%) contrast(105%);
+    transform: scale(1.2);
+    }
+
+.right img {
+    margin-right: 15px; 
+  }
+  

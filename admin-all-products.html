@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <title>Всі продукти | Antique & Co</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styleNav.css">   
+  <style>
+    .container {
+      padding: 20px;
+      background-color: #f8f9fa;
+    }
+    .product-item {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    .product-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .product-details {
+      flex: 1;
+    }
+    .product-actions button {
+      margin-right: 5px;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .edit-btn {
+      background-color: #007bff;
+      color: white;
+    }
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Antique & Co</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="order.html">Замовлення</a></li>
+        <li class="nav-item"><a class="nav-link" href="admin-panel.html">Додати продукт</a></li>
+        <li class="nav-item"><a class="nav-link active" href="admin-all-products.html">Товари</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <h2>Всі продукти</h2>
+  <div id="productsList"></div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="editForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Редагувати продукт</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрити"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="edit-id" />
+        <div class="mb-3">
+          <label for="edit-name" class="form-label">Назва</label>
+          <input type="text" class="form-control" id="edit-name" required />
+        </div>
+        <div class="mb-3">
+          <label for="edit-price" class="form-label">Ціна</label>
+          <input type="number" class="form-control" id="edit-price" required />
+        </div>
+        <div class="mb-3">
+          <label for="edit-category" class="form-label">Категорія</label>
+          <input type="text" class="form-control" id="edit-category" />
+        </div>
+        <div class="mb-3">
+          <label for="edit-description" class="form-label">Опис</label>
+          <textarea class="form-control" id="edit-description"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Зберегти</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const list = document.getElementById('productsList');
+  const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+  const editForm = document.getElementById('editForm');
+
+  // Отримати продукти з localStorage
+  function getProducts() {
+    const prods = localStorage.getItem('products');
+    return prods ? JSON.parse(prods) : [];
+  }
+
+  // Зберегти продукти в localStorage
+  function saveProducts(products) {
+    localStorage.setItem('products', JSON.stringify(products));
+  }
+
+  // Відобразити продукти
+  function renderProducts() {
+  const products = getProducts();
+  list.innerHTML = '';
+
+  if (products.length === 0) {
+    list.innerHTML = '<p>Продуктів немає.</p>';
+    return;
+  }
+
+  products.forEach(product => {
+  const div = document.createElement('div');
+  div.classList.add('product-item');
+
+  div.innerHTML = `
+    <div style="width:80px; height:80px; border-radius:4px; overflow:hidden; background:#eee; display:flex; align-items:center; justify-content:center;">
+      ${product.image ? `<img src="${product.image}" alt="Фото продукту" style="width:80px; height:80px; object-fit:cover;"/>`
+                       : `<span style="color:#999; font-size:12px;">Фото відсутнє</span>`}
+    </div>
+    <div class="product-details">
+      <p><strong>${escapeHTML(product.name)}</strong> - ${product.price} грн (${escapeHTML(product.category)})</p>
+      <p>${escapeHTML(product.description || '')}</p>
+    </div>
+    <div class="product-actions">
+      <button class="edit-btn" data-id="${product.id}">Редагувати</button>
+      <button class="delete-btn" data-id="${product.id}">Видалити</button>
+    </div>
+  `;
+
+  list.appendChild(div);
+});
+
+}
+
+// Делегуємо обробку натискань кнопок на контейнер list
+list.addEventListener('click', (e) => {
+  const target = e.target;
+  if (target.classList.contains('edit-btn')) {
+    const id = target.getAttribute('data-id');
+    openEditModal(id);
+  }
+  else if (target.classList.contains('delete-btn')) {
+    const id = target.getAttribute('data-id');
+    deleteProduct(id);
+  }
+});
+
+    
+
+  // Відкрити модальне вікно з даними для редагування
+  function openEditModal(id) {
+    const products = getProducts();
+    const product = products.find(p => p.id == id);
+    if (!product) return;
+
+    document.getElementById('edit-id').value = product.id;
+    document.getElementById('edit-name').value = product.name;
+    document.getElementById('edit-price').value = product.price;
+    document.getElementById('edit-category').value = product.category || '';
+    document.getElementById('edit-description').value = product.description || '';
+
+    editModal.show();
+  }
+
+  // Зберегти редагування
+  editForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const id = document.getElementById('edit-id').value;
+    const products = getProducts();
+    const index = products.findIndex(p => p.id == id);
+    if (index === -1) return alert('Продукт не знайдено');
+
+    products[index].name = document.getElementById('edit-name').value.trim();
+    products[index].price = parseFloat(document.getElementById('edit-price').value);
+    products[index].category = document.getElementById('edit-category').value.trim();
+    products[index].description = document.getElementById('edit-description').value.trim();
+
+    saveProducts(products);
+    editModal.hide();
+    renderProducts();
+  });
+
+  // Видалити продукт
+  function deleteProduct(id) {
+    if (!confirm('Видалити продукт?')) return;
+    let products = getProducts();
+    products = products.filter(p => p.id != id);
+    saveProducts(products);
+    renderProducts();
+  }
+
+  // Захист від XSS
+  function escapeHTML(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;')
+              .replace(/"/g, '&quot;')
+              .replace(/'/g, '&#39;');
+  }
+
+  // Початковий рендер
+  renderProducts();
+
+</script>
+</body>
+</html>

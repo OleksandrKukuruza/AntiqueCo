@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styleNav.css">
+    <title>Головна | Antique & Co</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Antique & Co</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">Головна</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="all-products.html">Усі товари</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="auctions.html">Аукціони від 1 гривні</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="new.html">Новинки</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="user-menu">
+            <span id="userEmailDisplay">Гість</span>
+            <button id="logoutBtn" class="logout-btn hidden">Вийти</button>
+          </div>
+          
+        </div>
+      </nav>
+
+      <div class="container">
+
+      <nav class="navbar bg-white" style="padding: 55px 100px;">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+          
+          <div class="left">
+            <img class="navbar-brand" style="height: 100px; width: 160px;" src="3674e483-0884-4565-ae9f-19b4110d3589-removebg-preview (1).png" alt="">
+          </div>
+      
+          <div class="center mx-auto">
+            <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="height: 50px; width: 508px; border-radius: 50px;" />
+              <button class="btn btn-outline-success" type="submit" style="width: 150px; border-radius: 50px;">Search</button>
+            </form>
+          </div>
+      
+          <div class="right">
+            <a href="favorites.html" class="btn btn-link">Обране <img src="free-icon-heart-2589197.png" alt=""></a>
+            <a href="login-choice.html" class="btn btn-link" id="loginButton">Вхід <img src="people.png" alt=""></a>
+            <a href="cart.html" class="btn btn-link position-relative">
+              Кошик
+              <img src="shopping-bag.png" alt="">
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
+                0
+              </span>
+            </a>
+            
+          </div>
+      
+        </div>
+      </nav>
+      <ul class="full-width-list">
+        <li><a href="all-products.html?category=Картини">Картини</a></li>
+        <li><a href="all-products.html?category=Скульптури">Скульптури</a></li>
+        <li><a href="all-products.html?category=Кераміка">Кераміка</a></li>
+        <li><a href="all-products.html?category=Прикраси">Прикраси</a></li>
+        <li><a href="all-products.html?category=Годинники">Годинники</a></li>
+        <li><a href="all-products.html?category=Книги">Книги</a></li>
+        <li><a href="all-products.html?category=Меблі">Меблі</a></li>
+        <li><a href="all-products.html?category=Колекційні монети">Колекційні монети</a></li>
+        <li><a href="all-products.html?category=Срібло">Срібло</a></li>
+        <li><a href="all-products.html?category=Золото">Золото</a></li>
+
+      </ul>
+
+      <div class="d-flex">
+        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" 
+     style="width: 47vw; margin-top: 50px; margin-left: 50px;">
+
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="photo-1543659596-1f9421e69863.avif" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="photo-1741959113068-b6ddd6304b8c.avif" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="photo-1693327956477-b76460720d1a.avif" class="d-block w-100" alt="...">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      
+      <div class="foto_auction">
+          <div class="hex-text">Аукціони від 1 гривні</div>
+        <img src="premium_photo-1661940814738-5a028d647d3a1.png" alt="">
+        <a href="auctions.html" class="btn-auction">Перейти</a>
+      </div>
+    </div>
+
+      <div class="rekom"><div class="rekomH">Промо пропозиції</div>
+        <div id="product-list" class="row"></div>
+      </div>
+
+      <div class="kategoriH">Категорії</div>
+
+      <div class="kategori">
+      
+        <div class="kategori-item">
+          <img src="photo-1573407613054-1765da91bab2.avif" alt="">
+          <p>Картини</p>
+          <a href="all-products.html?category=Картини" class="btn-pictures">Перейти</a>
+        </div>
+      
+        <div class="kategori-item">
+          <img src="photo-1687978879251-d4b6d88d7a7c.avif" alt="">
+          <p>Скульптури</p>
+          <a href="all-products.html?category=Скульптури" class="btn-pictures">Перейти</a>
+        </div>
+      
+        <div class="kategori-item tall-item">
+          <img src="photo-1710552524021-a8dc68c2a8dc.avif" alt="">
+          <p>Прикраси</p>
+          <a href="all-products.html?category=Прикраси" class="btn-pictures">Перейти</a>
+        </div>
+
+        <div class="kategori-item">
+          <img src="photo-1745620984416-8b3b0eccce74.avif" alt="">
+          <p>Колекційні монети</p>
+          <a href="all-products.html?category=Колекційні монети" class="btn-pictures">Перейти</a>
+        </div>
+
+        <div class="kategori-item ">
+          <img src="photo-1599583421629-4389ce85fdf3.avif" alt="">
+          <p>Книги</p>
+          <a href="all-products.html?category=Книги" class="btn-pictures">Перейти</a>
+        </div>
+      </div>
+
+
+      <div class="footer">
+        <div class="footer-question">
+          <p>Популярні запитання</p>
+          <div class="footer-question-item">
+            <ul>
+              <li class="toggle-item">
+                Які товари пропонує Antique & Co?
+                <div class="answer">
+                  Antique & Co спеціалізується на продажу антикваріату: картин, скульптур, кераміки, прикрас, годинників, книг, меблів, колекційних монет, виробів із золота та срібла.
+                </div>
+              </li>              
+              <li class="toggle-item">
+                Останні пошукові запити:
+                <div class="answer">
+                  Користувачі найчастіше шукають: антикваріат, вінтажні прикраси, колекційні монети, картини, старовинні меблі.
+                </div>
+              </li>              
+              <li class="toggle-item">
+                Як купувати на сайті Antique & Co?
+                <div class="answer">
+                  Для купівлі на сайті Antique & Co потрібно зареєструватися, переглянути доступні товари або аукціони, обрати лот і зробити ставку або оформити замовлення напряму.
+                </div>
+              </li>              
+              <li class="toggle-item">
+                Які способи доставки доступні?
+                <div class="answer">
+                  Доступні різні способи доставки: кур'єром, поштою, самовивіз.
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+
+        <div class="footer-nav">
+          <img src="3674e483-0884-4565-ae9f-19b4110d3589-removebg-preview (1).png" alt="">
+          
+          <div class="footer-nav-links">
+            <ul>
+              <li class="footer-item">
+                <a href="about.html">Про нас</a>
+              </li>
+              <li class="footer-item">
+                <a href=" howtobuy.html" title="Дізнайтеся про процес покупки на нашому сайті – просто, швидко та безпечно.">Як купити?</a>
+              </li>
+              <li class="footer-item">
+                <a href="authenticity.html" title="Дізнайтесь, як ми перевіряємо автентичність антикваріату.">Про автентичність</a>
+              </li>              
+              <li class="footer-item">
+                <a href="privacypolicy.html" title="Ваші дані під захистом — ознайомтесь із нашою політикою приватності.">Політика конфіденційності</a>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+
+        <div class="line"> </div>
+        
+        <div class="finish">© Antique & Co 2025</div>
+
+      </div>
+      
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+<script>
+
+</script>
+
+</body>
+</html>

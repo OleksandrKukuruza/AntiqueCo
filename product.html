@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <title>Деталі продукту | Antique & Co</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styleNav.css">
+<style>
+.product-card {
+  border: 1px solid #ccc; 
+  padding: 15px; 
+  margin: 10px; 
+  border-radius: 5px;
+  max-width: 300px;
+}
+.product-image {
+  max-width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+
+.filter-section {
+  display: flex;
+  align-items: center;
+}
+
+.filter-section label {
+  margin-bottom: 0; 
+  margin-right: 8px; 
+  font-weight: 500;
+  font-size: 16px;
+}
+
+#product-details {
+  background-color: #ffffff;
+  padding: 30px;
+  margin-top: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#product-details h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+#product-image {
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+#product-image:hover {
+  transform: scale(1.05);
+}
+
+#product-details p {
+  font-size: 18px;
+  margin: 10px 0;
+  color: #34495e;
+}
+
+#add-to-cart,
+#add-to-favorites {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+#add-to-cart {
+  background-color: #27ae60;
+  border: none;
+  color: white;
+}
+
+#add-to-cart:hover {
+  background-color: #1e8449;
+}
+
+#add-to-favorites {
+  border: 2px solid #e74c3c;
+  color: #e74c3c;
+  background-color: transparent;
+}
+
+#add-to-favorites:hover {
+  background-color: #e74c3c;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  #product-details {
+    padding: 15px;
+  }
+
+  #product-details h2 {
+    font-size: 22px;
+  }
+
+  #product-details p {
+    font-size: 16px;
+  }
+}
+</style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Antique & Co</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Головна</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="all-products.html">Усі товари</a>
+          </li>
+            <li class="nav-item"><a class="nav-link" href="auctions.html">Аукціони від 1 гривні</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="new">Новинки</a>
+          </li>
+        </ul>
+      </div>
+      <div class="right">
+    <a href="favorites.html" class="btn btn-link"> <img src="free-icon-heart-2589197.png" alt="" class="white-icon"></a>
+    <a href="login-choice.html" class="btn btn-link" id="loginButton"> <img src="people.png" alt="" class="white-icon"></a>
+
+    <a href="cart.html" class="btn btn-link position-relative">
+        
+        <img src="shopping-bag.png" alt="" class="white-icon">
+        <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger" id="cart-count">
+          0
+        </span>
+      </a>
+
+      </div>
+      <div class="user-menu">
+        <span id="userEmailDisplay">Гість</span>
+        <button id="logoutBtn" class="logout-btn hidden">Вийти</button>
+      </div>
+
+
+    </div>
+  </nav>
+
+  <div class="container">
+    <div id="product-details"></div>
+  </div>
+
+  <script>
+    // Отримання ID товару з URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+
+    // Отримуємо всі товари з localStorage
+    function getProducts() {
+      const productsJSON = localStorage.getItem('products');
+      return productsJSON ? JSON.parse(productsJSON) : [];
+    }
+
+    // Знайти продукт за id
+    function findProductById(id) {
+      const products = getProducts();
+      return products.find(p => String(p.id || p._id) === id);
+    }
+
+    // Форматування ціни
+    function formatPrice(price) {
+      return Number(price).toLocaleString('uk-UA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    // Захист від XSS
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str.replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+    }
+
+    const container = document.getElementById('product-details');
+
+    if (!productId) {
+      container.innerHTML = '<h2 class="text-danger">Помилка: ID продукту відсутній у URL</h2>';
+    } else {
+      const product = findProductById(productId);
+      if (!product) {
+        container.innerHTML = `<h2 class="text-warning">Продукт із ID "${escapeHTML(productId)}" не знайдено.</h2>`;
+      } else {
+        container.innerHTML = `
+          <h2>${escapeHTML(product.name)}</h2>
+          ${product.image ? `<img id="product-image" src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}" />` : '<p><em>Фото відсутнє</em></p>'}
+          <p><strong>Ціна:</strong> ${formatPrice(product.price)} грн</p>
+          <p><strong>Категорія:</strong> ${escapeHTML(product.category || '-')}</p>
+          <p><strong>Опис:</strong><br> ${escapeHTML(product.description || '')}</p>
+          <button id="add-to-cart" class="btn btn-primary">Додати в кошик</button>
+          <button id="add-to-favorites" class="btn btn-outline-danger">Додати в обране</button>
+        `;
+
+        // Додавання в кошик
+        document.getElementById('add-to-cart').addEventListener('click', () => {
+          const userEmail = localStorage.getItem("userEmail");
+if (!userEmail) {
+  alert("Спочатку увійдіть або зареєструйтесь!");
+  return;
+}
+const cartKey = `cart_${userEmail}`;
+let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+// Додаємо quantity = 1
+product.quantity = 1;
+
+cart.push(product);
+localStorage.setItem(cartKey, JSON.stringify(cart));
+
+          updateCartCount();
+          alert(`Товар "${product.name}" додано в кошик!`);
+        });
+
+        const userEmail = localStorage.getItem("userEmail");
+        const favoritesKey = userEmail ? `favorites_${userEmail}` : 'favorites_guest';
+
+        document.getElementById('add-to-favorites').addEventListener('click', () => {
+          let favorites = JSON.parse(localStorage.getItem(favoritesKey)) || [];
+
+          product._id = product.id || product._id;
+
+          if (!favorites.find(item => item._id === product._id)) {
+            favorites.push(product);
+            localStorage.setItem(favoritesKey, JSON.stringify(favorites));
+            alert('Товар додано в обране!');
+          } else {
+            alert('Товар вже є в обраному!');
+          }
+        });
+
+      }
+    }
+
+    // Оновлення лічильника кошика
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const count = cart.length;
+      const cartCountElement = document.getElementById('cart-count');
+      if (cartCountElement) {
+        cartCountElement.textContent = count;
+        cartCountElement.style.display = count > 0 ? 'inline-block' : 'none';
+      }
+    }
+
+    // Оновлюємо лічильник кошика при завантаженні сторінки
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCartCount();
+    });
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
