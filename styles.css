@@ -441,4 +441,24 @@ color: #000;
   .footer-question p {
     font-size: 18px;
   }
+
+
+
+  .navbar .center form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .navbar .center input[type="search"],
+  .navbar .center button {
+    width: 100% !important;
+    border-radius: 10px !important;
+    height: 45px;
+  }
+
+  .navbar .center {
+    width: 100%;
+    padding: 10px 0;
+  }
 }
